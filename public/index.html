@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>QuantaScan</title>
+    <base href="/">
+    <meta name="title" content="QuantaScan">
+    <meta name="description" content="Quantascan gives insights in The Quantum Resistant Ledger(QRL) blockchain. Containing a richlist, charts for average blocksize and blocktime, number stakers and more.">
+    <meta name="image" content="https://quantascan.io/assets/quantascan-home-screenshot.jpg">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#0a171f">
+  
+    <meta name="color-scheme" content="dark">
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link rel="shortcut icon" type="image/svg" href="<%= BASE_URL %>assets/icon/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= BASE_URL %>assets/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= BASE_URL %>assets/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= BASE_URL %>assets/icon/favicon-16x16.png">
+    <link rel="manifest" href="<%= BASE_URL %>assets/icon/site.webmanifest">
+    <link rel="mask-icon" href="<%= BASE_URL %>assets/icon/safari-pinned-tab.svg" color="#ffa729">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#0b181e">
+    <!-- add to homescreen for ios -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="QuantaScan">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="google-site-verification" content="BGScJIUKsop-H3_KFoZx9BKYiKyyAsg_We_vElvNk7U" >
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quantascan.io/">
+    <meta property="og:title" content="QuantaScan">
+    <meta property="og:description" content="Quantascan gives insights in The Quantum Resistant Ledger(QRL) blockchain. Containing a richlist, charts for average blocksize and blocktime, number stakers and more.">
+    <meta property="og:image" content="https://quantascan.io/assets/quantascan-home-screenshot.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://quantascan.io/">
+    <meta property="twitter:title" content="QuantaScan">
+    <meta property="twitter:description" content="Quantascan gives insights in The Quantum Resistant Ledger(QRL) blockchain. Containing a richlist, charts for average blocksize and blocktime, number stakers and more.">
+    <meta property="twitter:image" content="https://quantascan.io/assets/quantascan-home-screenshot.jpg">
+    
+    
+
+        <style>:root{--qrl-primary:#0a171f;--qrl-secundary:#4aafff;--qrl-tertaire:#ff9925;--qrl-white:#fff;--qrl-grey:#535d62;--breakpoint-xxs:0px;--breakpoint-xs:360px;--breakpoint-sm:576px;--breakpoint-md:768px;--breakpoint-lg:992px;--breakpoint-xl:1200px;--breakpoint-xxl:1660px;--breakpoint-xxxl:1900px;--font-family-sans-serif:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;--font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}*,::after,::before{box-sizing:border-box}html{font-family:sans-serif;line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0;font-family:Inter,sans-serif;font-size:.75rem;font-weight:400;line-height:1.5;color:var(--qrl-white);text-align:left}strong{font-weight:bolder}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}html{height:100%}body{height:100%;letter-spacing:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}#page-loader{position:fixed;top:0;left:0;bottom:0;right:0;background:var(--qrl-primary);z-index:9999}#page-loader.fade{display:none}#page-loader.fade.show{display:block}@-webkit-keyframes rotation{from{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(359deg);-moz-transform:rotate(359deg);-ms-transform:rotate(359deg);-o-transform:rotate(359deg);transform:rotate(359deg)}}@-moz-keyframes rotation{from{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(359deg);-moz-transform:rotate(359deg);-ms-transform:rotate(359deg);-o-transform:rotate(359deg);transform:rotate(359deg)}}@-o-keyframes rotation{from{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(359deg);-moz-transform:rotate(359deg);-ms-transform:rotate(359deg);-o-transform:rotate(359deg);transform:rotate(359deg)}}@keyframes rotation{from{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(359deg);-moz-transform:rotate(359deg);-ms-transform:rotate(359deg);-o-transform:rotate(359deg);transform:rotate(359deg)}}.spinner{height:72px;width:72px;margin:0 auto;position:absolute;top:50%;left:50%;margin:-18px 0 0 -18px;border:2px solid var(--qrl-tertaire );border-top:2px solid var(--qrl-primary);-webkit-border-radius:36px;border-radius:36px;-webkit-animation:.6s linear infinite rotation;-moz-animation:.6s linear infinite rotation;-ms-animation:rotation .6s infinite linear;-o-animation:.6s linear infinite rotation;animation:.6s linear infinite rotation}</style>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but Vue.js doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app">
+      <!-- begin #page-loader -->
+	    <div id="page-loader" class="fade show"><span class="spinner"></span></div>
+	    <!-- end #page-loader -->
+    </div>
+  </body>
+</html>
