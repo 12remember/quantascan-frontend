@@ -14,7 +14,7 @@
     "critical": "node critical.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.17.3",
     "compression": "^1.7.4",
