@@ -15,9 +15,9 @@ Run Quantascan Local
 
 # More information
 
-[Quantascan.io](https://www.quantascan.io" Quantascan.io")
-[The Quantum resistant Ledger](https://www.theqrl.org/" The QRL homepage")
+[Quantascan.io](https://www.quantascan.io "Quantascan.io")
+[The Quantum resistant Ledger](https://www.theqrl.org/ "The QRL homepage")
 
-[Discord Chat](https://discord.gg/RcR9WzX"Discord Chat")
+[Discord Chat](https://discord.gg/RcR9WzX "Discord Chat")
 
 
