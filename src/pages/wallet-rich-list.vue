@@ -8,6 +8,10 @@
   <!-- begin row -->
   <div class="row">
     <!-- begin col-12 -->
+    <div class="col-xl-12 d-flex flex-row align-items-center justify-content-end">
+      <p class="p-r-10 m-b-0 d-flex align-items-center">Export</p>
+      <button type="button" class="btn btn-primary" @click="exportData()">CSV</button>
+    </div>
     <div class="col-xl-12">
       <template v-if="isLoading.richListData">
         <div class="d-flex align-items-center min-h-400">
@@ -15,7 +19,7 @@
         </div>
       </template>
       <template v-else>
-        <vue-good-table ref='chart' :columns="richListColumns" :rows="richListData" :lineNumbers="false" :search-options="{ enabled: false, }"
+        <vue-good-table ref='richList' :columns="richListColumns" :rows="richListData" :lineNumbers="false" :search-options="{ enabled: false, }"
           :pagination-options="{ enabled: true,  position: 'bottom', perPage: 20, dropdownAllowAll: false, }"
           :sort-options="{enabled: false, initialSortBy: {field: 'address_balance', type: 'desc'}}" styleClass="vgt-table">
           <template slot="table-row" slot-scope="props">
@@ -194,7 +198,29 @@ export default {
         afterdot: number_split[1]
       }
 
-    }
+    },
+
+    exportData() {
+      console.log(this.$refs.richList.filteredRows[0].children)
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += [
+        Object.keys(this.$refs.richList.filteredRows[0].children[0]).join(";"),
+        ...this.$refs.richList.filteredRows[0].children.map(item => Object.values(item).join(";"))
+      ]
+        .join("\n")
+        .replace(/(^\[)|(\]$)/gm, "");
+
+      const data = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", data);
+      link.setAttribute("download", "qrl-rich-list-top-500.csv");
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+
+    },
 
 
   },
