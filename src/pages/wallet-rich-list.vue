@@ -8,10 +8,7 @@
   <!-- begin row -->
   <div class="row">
     <!-- begin col-12 -->
-    <div class="col-xl-12 d-flex flex-row align-items-center justify-content-end">
-      <p class="p-r-10 m-b-0 d-flex align-items-center">Export</p>
-      <button type="button" class="btn btn-primary" @click="exportData()">CSV</button>
-    </div>
+
     <div class="col-xl-12">
       <template v-if="isLoading.richListData">
         <div class="d-flex align-items-center min-h-400">
@@ -19,6 +16,10 @@
         </div>
       </template>
       <template v-else>
+        <div class="col-xl-12 d-flex flex-row align-items-center justify-content-end">
+          <p class="p-r-10 m-b-0 d-flex align-items-center">Export</p>
+          <button type="button" class="btn btn-primary" @click="exportData()">CSV</button>
+        </div>
         <vue-good-table ref='richList' :columns="richListColumns" :rows="richListData" :lineNumbers="false" :search-options="{ enabled: false, }"
           :pagination-options="{ enabled: true,  position: 'bottom', perPage: 20, dropdownAllowAll: false, }"
           :sort-options="{enabled: false, initialSortBy: {field: 'address_balance', type: 'desc'}}" styleClass="vgt-table">
@@ -189,7 +190,6 @@ export default {
       const currencyValue = this.coingeckoPriceData[this.selectedCurrency.name]
 
       const walletValue = vol * currencyValue
-      console.log(walletValue)
 
       const number_split = walletValue.toFixed(2).split('.')
       const number_split_predot = number_split[0].toString().replace(/\B(?=(\d{3})+(?!.))/g, ",")
@@ -201,7 +201,6 @@ export default {
     },
 
     exportData() {
-      console.log(this.$refs.richList.filteredRows[0].children)
       let csvContent = "data:text/csv;charset=utf-8,";
       csvContent += [
         Object.keys(this.$refs.richList.filteredRows[0].children[0]).join(";"),
