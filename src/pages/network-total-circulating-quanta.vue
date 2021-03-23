@@ -113,7 +113,8 @@ export default {
           {
             type: 'areaspline',
             name: 'Total Quanta',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
         ],
         responsive: {

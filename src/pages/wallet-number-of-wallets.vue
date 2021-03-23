@@ -107,7 +107,8 @@ export default {
           {
             type: 'spline',
             name: 'Number of Wallets',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
         ],
         responsive: {
