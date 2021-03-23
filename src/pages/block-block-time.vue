@@ -112,7 +112,8 @@ export default {
           {
             type: 'spline',
             name: 'Average Blocktime',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
         ],
         responsive: {

@@ -167,17 +167,20 @@ export default {
           {
             type: 'spline',
             name: 'Number of Transactions coinbase',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
           {
             type: 'spline',
             name: 'Number of Transactions transfers',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
           {
             type: 'spline',
             name: 'Number of Transactions slave',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
           {
             type: 'column',

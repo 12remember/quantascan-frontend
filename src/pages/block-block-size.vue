@@ -110,7 +110,8 @@ export default {
           {
             type: 'spline',
             name: 'Average Block Size',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
         ],
         responsive: {

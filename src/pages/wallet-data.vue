@@ -461,7 +461,8 @@ export default {
           {
             type: 'spline',
             name: 'Transactions',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
         ],
         responsive: {

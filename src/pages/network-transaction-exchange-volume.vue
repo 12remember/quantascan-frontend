@@ -111,7 +111,8 @@ export default {
           {
             type: 'column',
             name: 'Daily Volume Of Exchange Wallets',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
         ],
 

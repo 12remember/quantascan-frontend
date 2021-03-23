@@ -212,12 +212,14 @@ export default {
             name: 'Number of Wallets',
             data: [],
             yAxis: 0,
+            turboThreshold: 5000,
             },
           {
             type: 'spline',
             name: 'Sum of POS Keys',
             data: [],
             yAxis: 1,
+            turboThreshold: 5000,
 
           },
         ]

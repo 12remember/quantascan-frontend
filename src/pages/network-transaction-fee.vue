@@ -109,7 +109,8 @@ export default {
           {
             type: 'spline',
             name: 'Average Transaction Fee',
-            data: []
+            data: [],
+            turboThreshold: 5000,
           },
         ],
 
