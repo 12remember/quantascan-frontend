@@ -186,13 +186,15 @@ export default {
             type: 'column',
             name: 'Transaction Volume',
             data: [],
-            yAxis: 1
+            yAxis: 1,
+            turboThreshold: 5000,
             },
           {
             type: 'column',
             name: 'Transaction Volume',
             data: [],
-            yAxis: 1
+            yAxis: 1,
+            turboThreshold: 5000,
           }
 
         ],
