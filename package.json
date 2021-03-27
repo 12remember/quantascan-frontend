@@ -41,6 +41,7 @@
     "vue-jsonld": "^1.0.1",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.4.5",
+    "vue-router-sitemap": "0.0.4",
     "vue-select": "^3.10.8",
     "vue-slider-component": "^3.2.5",
     "vue-sweetalert2": "^3.0.8"
