@@ -1,17 +1,13 @@
-'use strict';
-
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+require = require('esm')(module);
+const {
+  routes
+} = require('./src/config/PageRoutes.vue');
 
 module.exports = {
-  configureWebpack: {
-    plugins: [
-      new ScriptExtHtmlWebpackPlugin({
-        custom: {
-          test: /\.js$/, // adjust this regex based on your demand
-          attribute: 'nonce',
-          value: '<%= nonce %>'
-        }
-      }),
-    ]
+  pluginOptions: {
+    sitemap: {
+      baseURL: 'https://www.quantascan.io',
+      routes,
+    }
   }
 }
