@@ -23,6 +23,11 @@
               Donations
             </router-link>
           </div>
+          <div class="d-flex">
+            <router-link class="footer-item-link m-r-10" :to="{ name: 'linkpartners', params: {} }">
+              Linkpartners
+            </router-link>
+          </div>
           <div class="d-flex" v-if="showThis">
             <router-link class="footer-item-link m-r-10" :to="{ name: 'info-site-participating', params: {} }">
               Participating

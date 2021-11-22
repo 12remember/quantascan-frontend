@@ -1,7 +1,7 @@
 require = require('esm')(module);
 const {
   routes
-} = require('./src/config/PageRoutes.vue');
+} = './src/config/PageRoutes.vue';
 
 module.exports = {
   pluginOptions: {

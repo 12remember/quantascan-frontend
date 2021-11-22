@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
 const serveStatic = require('serve-static')
 //const cors = require('cors')
-
+const rateLimit = require("express-rate-limit");
 const crypto = require("crypto");
 const path = require('path')
 const app = express()
@@ -160,7 +160,7 @@ app.use((req, res, next) => {
     if (req.headers.host === 'https://www.quantascan.io')
       return res.redirect(301, 'https://quantascan.io');
     if (req.headers['x-forwarded-proto'] !== 'https')
-      return res.redirect('https://quantascan.io' + req.url);
+      return res.redirect('https://' + req.headers.host + req.url);
     else
       return next();
   } else
@@ -169,6 +169,17 @@ app.use((req, res, next) => {
 
 // Serve Static
 app.use('/', serveStatic(path.join(__dirname, '/dist')))
+
+// Rate limiting
+app.use(
+  rateLimit({
+    windowMs: 12 * 60 * 60 * 1000, // 12 hour duration in milliseconds
+    max: 100,
+    message: "You exceeded request limit!",
+    headers: true,
+  })
+);
+
 
 // below is important so refresh of page is not resulting in a 404 error
 app.get(/.*/, function(req, res) {
