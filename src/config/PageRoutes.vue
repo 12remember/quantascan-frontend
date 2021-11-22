@@ -26,6 +26,7 @@ const infoMarkets = () => import('../pages/info-markets.vue')
 const infoSiteFAQ = () => import('../pages/info-site-faq.vue')
 //const infoSiteParticipating = () => import('../pages/info-site-participating.vue')
 
+const linkpartners = () => import('../pages/linkpartners.vue')
 
 
 const router = (to, from, next) => {
@@ -73,6 +74,14 @@ const routes = [
     component: infoSiteFAQ,
     beforeEnter: router
   },
+  {
+    path: '/linkpartners',
+    name: 'linkpartners',
+    component: linkpartners,
+    beforeEnter: router
+  },
+
+
 //  {
 //    path: '/blog',
 //    name: 'info-blog',
