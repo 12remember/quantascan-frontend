@@ -167,8 +167,6 @@ app.use((req, res, next) => {
     return next();
 });
 
-// Serve Static
-app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
 // Rate limiting
 app.use(
@@ -179,6 +177,9 @@ app.use(
     headers: true,
   })
 );
+
+// Serve Static
+app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
 
 // below is important so refresh of page is not resulting in a 404 error
