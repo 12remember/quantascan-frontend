@@ -28,6 +28,7 @@
     "helmet": "^4.6.0",
     "highcharts": "^9.3.1",
     "highcharts-vue": "^1.4.0",
+    "is-valid-path": "^0.1.1",
     "mem": "^9.0.1",
     "node-sass": "^6.0.1",
     "nth-check": "^2.0.1",

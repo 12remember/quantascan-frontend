@@ -12,7 +12,7 @@ const crypto = require("crypto");
 const path = require('path')
 const app = express()
 //const critical = require('critical');
-
+const isValidPath = require('is-valid-path');
 
 // Security Headers
 
@@ -182,12 +182,10 @@ app.use(
 app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
 
-// below is important so refresh of page is not resulting in a 404 error
+//below is important so refresh of page is not resulting in a 404 error
 app.get(/.*/, function(req, res) {
   res.sendFile(path.join(__dirname, '/dist/index.html'))
 })
-
-
 
 
 
