@@ -22,7 +22,7 @@
     "csurf": "^1.11.0",
     "epic-spinners": "^1.1.0",
     "esm": "^3.2.25",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-rate-limit": "^5.5.1",
     "glob-parent": "^6.0.2",
     "helmet": "^4.6.0",
