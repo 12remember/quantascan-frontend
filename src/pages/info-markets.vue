@@ -10,7 +10,7 @@
     <h2 class=" col-xl-12 m-0">Exchanges</h2>
     <div class="d-flex justify-content-center align-items-center col-xl-4 col-md-6 col-sm-12" v-for="(item, index) in listExchanges" :key="index">
       <a class="d-flex align-items-center p-20" :href="item.href" target="_blank" rel="nofollow noopener">
-        <img style="max-width:300px;" :width="item.width" :height="item.height" :src="require('../assets/logo/' + item.image)" :alt="item.alt">
+        <img style="max-width:300px;" :src="require('../assets/logo/' + item.image)" :alt="item.alt">
       </a>
     </div>
   </div>
@@ -57,7 +57,7 @@ export default {
           href: 'https://www.mexc.com/exchange/QRL_USDT',
           desc: '',
           width: '300px',
-          height: '58px'
+
         },
         {
           image: 'logo-dex.png',
@@ -65,7 +65,7 @@ export default {
           href: 'https://dex-trade.com/spot/trading/QRLUSDT',
           desc: '',
           width: '300px',
-          height: '58px'
+
         },
         {
           image: 'logo-tidecoin.png',
@@ -73,7 +73,7 @@ export default {
           href: 'https://www.tidecoin.exchange/trading/qrlusdt',
           desc: '',
           width: '300px',
-          height: '58px'
+
         },        
       ],
 
