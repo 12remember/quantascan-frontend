@@ -28,14 +28,15 @@ If you want that the front-end uses data from a locally hosted Postgresql databa
 1. go to map "/QRL/quantascan-frontend/src"
 2. Open file "main.js"
 3. find code (line 97) 
-
+```python
 else {
 //axios.defaults.baseURL = 'http://127.0.0.1:8000'
  axios.defaults.baseURL = 'https://analytics.quantascan.io'
  axios.defaults.xsrfCookieName = 'csrftoken'
  axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 }
-
+```
+```python
 4. change it to:
 else {
  axios.defaults.baseURL = 'http://127.0.0.1:8000'
@@ -43,7 +44,7 @@ else {
  axios.defaults.xsrfCookieName = 'csrftoken'
  axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 }
-
+```
 5. The frontend will now gets it data of the locally running database 
 
 

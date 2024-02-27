@@ -13,6 +13,10 @@
           <a class="" style="color: #fff;" href="https://coinmarketcap.com/" target="_blank" rel="dofollow">Coinmarketcap
             <v-icon name="external-link-alt" scale="1" /></a>
         </div>
+        <div class="d-flex flex-row align-items-center h3">
+          <a class="" style="color: #fff;" href="https://p2pq.trade/" target="_blank" rel="dofollow">P2PQ trade
+            <v-icon name="external-link-alt" scale="1" /></a>
+        </div>
       </div>
     </div>
   </div>
