@@ -16,16 +16,6 @@
   </div>
   <!-- end row -->
 
-  <!-- begin row -->
-  <div class="row p-20">
-    <h2 class="col-xl-12 m-0">Services for Swapping Quanta(QRL)</h2>
-    <div class="d-flex justify-content-center align-items-center col-xl-4 col-md-6 col-sm-12" v-for="(item, index) in listSwapServices" :key="index">
-      <a class="d-flex align-items-center p-20" :href="item.href" target="_blank" rel="nofollow noopener">
-        <img style="max-width:300px;" :width="item.width" :height="item.height" :src="require('../assets/logo/' + item.image)" :alt="item.alt">
-      </a>
-    </div>
-  </div>
-  <!-- end row -->
 
   <!-- begin row -->
   <div class="row p-20">
@@ -62,67 +52,31 @@ export default {
       isLoading: {},
       listExchanges: [
         {
-          image: 'logo-cointiger.png',
-          alt: 'Cointiger logo',
-          href: 'https://www.cointiger.com/en-us/#/trade_center?coin=qrl_btc',
+          image: 'logo-mexc.svg',
+          alt: 'MEXC logo',
+          href: 'https://www.mexc.com/exchange/QRL_USDT',
           desc: '',
           width: '300px',
           height: '58px'
         },
         {
-          image: 'logo-bittrex-international.png',
-          alt: 'Bittrex International logo',
-          href: 'https://global.bittrex.com/Market/Index?MarketName=BTC-QRL',
+          image: 'logo-dex.png',
+          alt: 'dex-trade logo',
+          href: 'https://dex-trade.com/spot/trading/QRLUSDT',
           desc: '',
           width: '300px',
-          height: '105px'
+          height: '58px'
         },
         {
-          image: 'logo-biteeu.png',
-          alt: 'Biteeu logo',
-          href: 'https://trade.biteeu.com/search',
+          image: 'logo-tidecoin.png',
+          alt: 'Tidecoin logo',
+          href: 'https://www.tidecoin.exchange/trading/qrlusdt',
           desc: '',
           width: '300px',
-          height: '77px'
-        },
-        {
-          image: 'logo-vcc-exchange.png',
-          alt: 'VCC Exchange logo',
-          href: 'https://vcc.exchange/exchange/basic?currency=btc&coin=qrl',
-          name: 'VCC Exchange',
-          desc: 'VCC Exchange is a centralized exchange that is based in Singapore, operates in Vietnam. Launched in May 2019',
-          width: '300px',
-          height: '163px'
-        },
-        {
-          image: 'logo-bitvoicex.png',
-          alt: 'Bitvoicex',
-          href: 'https://bitvoicex.net/markets/qrl_btc',
-          desc: '',
-          width: '300px',
-          height: '68px'
-        }
+          height: '58px'
+        },        
       ],
 
-      listSwapServices: [
-        {
-          image: 'logo-swapzone-io.png',
-          alt: 'Swapzone logo',
-          href: 'https://swapzone.io/?to=qrl',
-          desc: '',
-          width: '300px',
-          height: '147px'
-        },
-        {
-          image: 'logo-stealthex.png',
-          alt: 'StealthEX logo',
-          href: 'https://stealthex.io/coin/qrl',
-          desc: '',
-          width: '300px',
-          height: '128px'
-          }
-
-          ]
 
 
     };
