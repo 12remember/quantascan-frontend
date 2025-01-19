@@ -6,7 +6,7 @@ const {
 module.exports = {
   pluginOptions: {
     sitemap: {
-      baseURL: 'https://www.quantascan.io',
+      baseURL: process.env.BASE_URL || 'https://www.quantascan.io',
       routes,
     }
   }
