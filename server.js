@@ -5,37 +5,27 @@ const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const serveStatic = require('serve-static');
 const path = require('path');
-const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.disable('x-powered-by');
+
 // Allow all origins (CORS)
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*'); // Toestaan van alle origins
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Toestaan van HTTP-methodes
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Toestaan van headers
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allow HTTP methods
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow headers
   if (req.method === 'OPTIONS') {
-    return res.sendStatus(200); // Snel reageren op preflight-verzoeken
+    return res.sendStatus(200); // Quick response for preflight requests
   }
   next();
 });
-// Security - Helmet with improved CSP
+
+// Security - Helmet without CSP
 app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'", "analytics.quantascan.io", "https://api.coingecko.com"],
-      frameAncestors: ["'none'"],
-      objectSrc: ["'none'"],
-      upgradeInsecureRequests: [],
-    },
-  },
+  contentSecurityPolicy: false, // Disable CSP temporarily
   frameguard: { action: 'deny' },
   referrerPolicy: { policy: 'no-referrer' },
 }));
