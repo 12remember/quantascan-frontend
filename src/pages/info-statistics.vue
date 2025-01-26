@@ -64,7 +64,7 @@ export default {
   methods: {
     fetchStatistics() {
       axios
-        .get("/api/block-statistics/")
+        .get("api/block-statistics")
         .then((response) => {
           const { highest_block_number, total_rows, compliance_percentage, missing_blocks } =
             response.data;
