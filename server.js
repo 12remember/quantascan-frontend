@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const compression = require('compression');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 8080;
 // Middleware
 app.disable('x-powered-by');
 
-
+app.use(cors());
 // Security - Helmet without CSP
 app.use(helmet({
   contentSecurityPolicy: false, // Disable CSP temporarily
