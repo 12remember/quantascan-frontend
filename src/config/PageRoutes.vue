@@ -18,7 +18,7 @@ const networkTransactions = () => import('../pages/network-transactions.vue')
 const networkTotalCirculatingQuanta = () => import('../pages/network-total-circulating-quanta.vue')
 const networkTransactionFee = () => import('../pages/network-transaction-fee.vue')
 //const networkTransactionExchangeVolume = () => import('../pages/network-transaction-exchange-volume.vue')
-
+const siteStatistics = () => import('../pages/info-statistics.vue')
 
 //const toolsAccumulationCalculator = () => import('../pages/tools-accumulation-calculator.vue')
 const walletData = () => import('../pages/wallet-data.vue')
@@ -79,6 +79,11 @@ const routes = [
     name: 'linkpartners',
     component: linkpartners,
     beforeEnter: router
+  },
+    {
+    path: '/site-statistics',
+    name: 'siteStatistics',
+    component: siteStatistics,
   },
 
 

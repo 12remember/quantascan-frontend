@@ -39935,3 +39935,14 @@ table.vgt-table tr.clickable:hover {
   margin-right: 20px;
   transition: 0.3s;  
 }
+
+
+.fa-icon{
+    fill:var(--qrl-white);
+
+}
+
+.btn-search .fa-icon{
+    fill:var(--qrl-tertaire) 
+
+}

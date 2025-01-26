@@ -28,6 +28,11 @@
               Linkpartners
             </router-link>
           </div>
+            <div class="d-flex">
+            <router-link class="footer-item-link m-r-10" :to="{ name: 'siteStatistics', params: {} }">
+              SiteStatistics
+            </router-link>
+          </div>
           <div class="d-flex" v-if="showThis">
             <router-link class="footer-item-link m-r-10" :to="{ name: 'info-site-participating', params: {} }">
               Participating
@@ -41,52 +46,55 @@
     <div class="footer-block d-flex flex-column col-lg-3 col-md-6">
       <div class="footer-title">
         Learn More
+        <v-icon name="external-link-alt" scale="1" />
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://faqq.info/" target="_blank" rel="nofollow noopener">FAQ Quantum Computers & Blockchain
-          <v-icon name="external-link-alt" scale="1" /></a>
+          </a>
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://github.com/theQRL/Whitepaper" target="_blank" rel="nofollow noopener">Whitepapers
-          <v-icon name="external-link-alt" scale="1" /></a>
+         </a>
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://theqrl.org/protocol-updates/" target="_blank" rel="nofollow noopener">Roadmap
-          <v-icon name="external-link-alt" scale="1" /></a>
+          </a>
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://theqrl.org/blog/" target="_blank" rel="nofollow noopener">Blog
-          <v-icon name="external-link-alt" scale="1" /></a>
+          </a>
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://theqrl.org/#contributors" target="_blank" rel="nofollow noopener">Contributors
-          <v-icon name="external-link-alt" scale="1" /></a>
+          </a>
       </div>
+      
     </div>
 
     <div class="footer-block d-flex flex-column col-lg-3 col-md-6">
       <div class="footer-title">
         Offical QRL Resources
+        <v-icon name="external-link-alt" scale="1" />
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://explorer.theqrl.org/" target="_blank" rel="nofollow noopener">Explorer
-          <v-icon name="external-link-alt" scale="1" /></a>
+          </a>
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://wallet.theqrl.org/" target="_blank" rel="nofollow noopener">Web Wallet (Official)
-          <v-icon name="external-link-alt" scale="1" /></a>
+          </a>
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://api.theqrl.org/" target="_blank" rel="nofollow noopener">API Documentation
-          <v-icon name="external-link-alt" scale="1" /></a>
+          </a>
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://docs.theqrl.org/" target="_blank" rel="nofollow noopener">QRL Documentation
-          <v-icon name="external-link-alt" scale="1" /></a>
+          </a>
       </div>
       <div class="d-flex flex-row align-items-center">
         <a class="footer-item-link m-r-10" href="https://github.com/theQRL/" target="_blank" rel="nofollow noopener">Github
-          <v-icon name="external-link-alt" scale="1" /></a>
+          </a>
       </div>
     </div>
 

@@ -5,7 +5,14 @@
     <!-- begin navbar-header -->
     <div class="navbar-header d-flex flex-shrink-0 m-r-20">
       <router-link :to="{ name: 'home'}" class="navbar-brand">
-        <img class=" d-flex flex-shrink-1 " width='50px' height='50px' :src="require('../../assets/Icon/qrl/orange_50x50.png')" alt="Qrl Logo">
+              <img 
+        class="d-flex flex-shrink-1 lazy-logo" 
+        width="50px" 
+        height="50px" 
+        :src="logoSrc" 
+        alt="Qrl Logo" 
+        loading="lazy"
+      />
         <div style="position:relative">QuantaScan<span class="badge badge-primary"
             style="position:absolute; right:0px; bottom:-14px; padding: 1px 7px;">Alpha</span></div>
       </router-link>
@@ -55,24 +62,31 @@ export default {
   data() {
     return {
       pageOptions: PageOptions,
-      inputSearchField: ''
+      inputSearchField: '',
+      logoSrc: require('../../assets/Icon/qrl/orange_50x50.png') // Placeholder image
     }
   },
+  mounted() {
+    // Lazy-load the GIF logo
+    const gifLogo = require('../../assets/logo/QuantaScan2-100.gif');
+    const img = new Image();
+    img.src = gifLogo;
+    img.onload = () => {
+      this.logoSrc = gifLogo; // Replace placeholder with GIF once loaded
+    };
+  },
   methods: {
-
     toggleMobileMegaMenu() {
       this.pageOptions.pageMobileMegaMenu = !this.pageOptions.pageMobileMegaMenu;
     },
-
-    checkForm: function (e) {
+    checkForm(e) {
       if (this.inputSearchField.length == 79 && this.inputSearchField.startsWith('Q')) {
         this.$router.push({
           name: 'wallet-data',
           params: {
             qrl_address: this.inputSearchField
           }
-        })
-
+        });
       } else {
         this.$swal({
           position: 'top-end',
@@ -81,11 +95,11 @@ export default {
           text: 'Please in check the QRL Address',
           showConfirmButton: false,
           timer: 2000
-        })
+        });
         e.preventDefault();
       }
-
     }
   }
-}
+};
+
 </script>
