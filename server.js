@@ -45,16 +45,24 @@ app.use((req, res, next) => {
 });
 
 // Static File Serving with Caching
-app.use(serveStatic(path.join(__dirname, 'dist'), {
-  maxAge: '1y',
-  etag: true,
-}));
+app.use(
+  serveStatic(path.join(__dirname, 'dist'), {
+    maxAge: '1y', // Cache assets for one year
+    etag: true,
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('index.html')) {
+        // Force latest version of index.html
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      }
+    },
+  })
+);
 
 // Fallback for SPA routes
 app.get('*', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); // Ensure no caching for SPA route
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
-
 // Start Server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
