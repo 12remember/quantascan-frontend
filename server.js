@@ -15,16 +15,18 @@ app.disable('x-powered-by');
 
 app.use(cors());
 // Security - Helmet without CSP
-app.use(helmet({
-  contentSecurityPolicy: false, // Disable CSP temporarily
-  frameguard: { action: 'deny' },
-  referrerPolicy: { policy: 'no-referrer' },
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // Disable CSP temporarily
+    frameguard: { action: 'deny' },
+    referrerPolicy: { policy: 'no-referrer' },
+  })
+);
 
 // Security - Rate Limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  max: 100,
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -44,15 +46,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// Static File Serving with Caching
+// Static File Serving with Cache-Control Headers
 app.use(
   serveStatic(path.join(__dirname, 'dist'), {
     maxAge: '1y', // Cache assets for one year
     etag: true,
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html')) {
-        // Force latest version of index.html
         res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      } else {
+        // Cache all other assets with max-age
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       }
     },
   })
@@ -60,9 +64,10 @@ app.use(
 
 // Fallback for SPA routes
 app.get('*', (req, res) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); // Ensure no caching for SPA route
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

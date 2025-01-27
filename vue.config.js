@@ -7,8 +7,8 @@ module.exports = {
   pluginOptions: {
     sitemap: {
       baseURL: process.env.BASE_URL || 'https://www.quantascan.io',
-      routes,
-    }
+    },
   },
-  filenameHashing: true,
-}
+  filenameHashing: true, // Enable hashed filenames
+  productionSourceMap: false, // Optional: Disable source maps for smaller builds
+};
