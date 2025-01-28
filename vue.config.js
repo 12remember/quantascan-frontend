@@ -1,4 +1,6 @@
-const { routes } = require('./src/config/PageRoutes.vue');
+const { routes } = require('./src/config/PageRoutes.js');
+
+
 
 module.exports = {
   pluginOptions: {
@@ -7,7 +9,6 @@ module.exports = {
       routes,
     },
   },
-  publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
   filenameHashing: true,
   productionSourceMap: false,
-};
+}
