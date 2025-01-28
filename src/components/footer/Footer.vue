@@ -30,7 +30,7 @@
           </div>
             <div class="d-flex">
             <router-link class="footer-item-link m-r-10" :to="{ name: 'siteStatistics', params: {} }">
-              Site Statistics
+              Site statistics
             </router-link>
           </div>
           <div class="d-flex" v-if="showThis">
