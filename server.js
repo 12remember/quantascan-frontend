@@ -49,18 +49,21 @@ app.use((req, res, next) => {
 // Static File Serving with Cache-Control Headers
 app.use(
   serveStatic(path.join(__dirname, 'dist'), {
-    maxAge: '1y', // Cache assets for one year
-    etag: true,
+    maxAge: '0', // Set max-age to 0 to prevent long-term caching
+    etag: true, // Enable ETag
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html')) {
+        // No cache for index.html
         res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-      } else {
-        // Cache all other assets with max-age
-        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      } else if (/\.(js|css|json|png|jpg|svg|woff2?)$/.test(filePath)) {
+        // Force revalidation for other files
+        res.setHeader('Cache-Control', 'no-cache');
       }
     },
   })
 );
+
+
 
 // Fallback for SPA routes
 app.get('*', (req, res) => {

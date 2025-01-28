@@ -102,16 +102,25 @@ if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
 }
 
 const checkForUpdates = async () => {
-  const res = await fetch('/version.json');
-  const { version } = await res.json();
-  const cachedVersion = localStorage.getItem('appVersion');
-  if (cachedVersion && cachedVersion !== version) {
-    window.location.reload(true); // Force reload
+  try {
+    const response = await fetch('/version.json');
+    const { version } = await response.json();
+    const currentVersion = localStorage.getItem('appVersion');
+
+    if (currentVersion && currentVersion !== version) {
+      // New version detected
+      localStorage.setItem('appVersion', version);
+      window.location.reload(true);
+    } else {
+      localStorage.setItem('appVersion', version);
+    }
+  } catch (error) {
+    console.error('Error checking for updates:', error);
   }
-  localStorage.setItem('appVersion', version);
 };
 
 checkForUpdates();
+
 
 new Vue({
   render: h => h(App),
