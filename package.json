@@ -11,6 +11,9 @@
     "serve": "vue-cli-service serve --mode development",
     "start": "node server.js"
   },
+  "heroku": {
+  "node_modules_cache": false
+},
   "dependencies": {
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",
