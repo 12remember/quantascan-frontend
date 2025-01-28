@@ -6,6 +6,7 @@
     "build": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint",
     "build-report": "vue-cli-service build --report",
+    "heroku-postbuild": "npm run build",
     "serve": "vue-cli-service serve --mode development",
     "start": "node server.js"
   },
