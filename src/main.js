@@ -101,7 +101,17 @@ if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
   axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 }
 
+const checkForUpdates = async () => {
+  const res = await fetch('/version.json');
+  const { version } = await res.json();
+  const cachedVersion = localStorage.getItem('appVersion');
+  if (cachedVersion && cachedVersion !== version) {
+    window.location.reload(true); // Force reload
+  }
+  localStorage.setItem('appVersion', version);
+};
 
+checkForUpdates();
 
 new Vue({
   render: h => h(App),

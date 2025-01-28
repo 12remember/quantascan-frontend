@@ -3,10 +3,11 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
+    "generate-version": "echo '{\"version\": \"'$(date +%s)'\"}' > dist/version.json",
     "build": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint",
     "build-report": "vue-cli-service build --report",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "npm run build && npm run generate-version",
     "serve": "vue-cli-service serve --mode development",
     "start": "node server.js"
   },
