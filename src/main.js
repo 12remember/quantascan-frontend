@@ -102,16 +102,24 @@ if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
 }
 
 const checkForUpdates = async () => {
+  console.log('Checking for updates...');
   try {
     const response = await fetch('/version.json');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch version.json: ${response.status}`);
+    }
     const { version } = await response.json();
     const currentVersion = localStorage.getItem('appVersion');
 
+    console.log('Current version:', currentVersion);
+    console.log('New version:', version);
+
     if (currentVersion && currentVersion !== version) {
-      // New version detected
+      console.log('New version detected. Reloading...');
       localStorage.setItem('appVersion', version);
-      window.location.reload(true);
+      window.location.reload(true); // Force reload
     } else {
+      console.log('App is up-to-date.');
       localStorage.setItem('appVersion', version);
     }
   } catch (error) {
@@ -120,6 +128,8 @@ const checkForUpdates = async () => {
 };
 
 checkForUpdates();
+
+
 
 
 new Vue({

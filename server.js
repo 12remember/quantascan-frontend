@@ -39,36 +39,45 @@ app.use(compression());
 app.use(cookieParser());
 
 // Force HTTPS
-app.use((req, res, next) => {
-  if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(`https://${req.headers.host}${req.url}`);
-  }
-  next();
-});
+if (process.env.NODE_ENV === 'production') {
+  app.enable('trust proxy'); // Enable proxy trust for Heroku
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+    next();
+  });
+}
 
 app.use(
   serveStatic(path.join(__dirname, 'dist'), {
-    maxAge: '0', // Disable caching for dynamic builds
-    etag: true, // Use ETag to validate file versions
+    etag: true,
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html')) {
+        // Prevent caching for index.html
         res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       } else if (/\.(js|css|json|png|jpg|svg|woff2?)$/.test(filePath)) {
-        res.setHeader('Cache-Control', 'no-cache'); // Prevent caching for static files
+        // Cache static assets with a long expiration for hashed files
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       }
     },
   })
 );
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    registrations.forEach(registration => registration.unregister());
+  });
+}
 
-app.use((req, res, next) => {
-  console.log(`Serving: ${req.path}`);
-  next();
-});
-
-// Fallback for SPA routes
+if (process.env.NODE_ENV !== 'production') {
+  app.use((req, res, next) => {
+    console.log(`Serving: ${req.path}`);
+    next();
+  });
+}
+// Fallback for SPA
 app.get('*', (req, res) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
