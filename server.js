@@ -38,16 +38,28 @@ app.use(compression());
 // Parse Cookies
 app.use(cookieParser());
 
-// Force HTTPS
-if (process.env.NODE_ENV === 'production') {
-  app.enable('trust proxy'); // Enable proxy trust for Heroku
-  app.use((req, res, next) => {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-      return res.redirect(`https://${req.headers.host}${req.url}`);
-    }
-    next();
-  });
-}
+
+// Trust Heroku Proxy
+app.enable('trust proxy');
+
+
+// **Force HTTPS & Redirect www → non-www **
+app.use((req, res, next) => {
+  const host = req.headers.host;
+  const protocol = req.headers['x-forwarded-proto'];
+
+  // Redirect HTTP → HTTPS
+  if (protocol !== 'https') {
+    return res.redirect(301, `https://${host}${req.url}`);
+  }
+
+  // Redirect www → non-www (change this if you want www as primary)
+  if (host.startsWith('www.')) {
+    return res.redirect(301, `https://${host.replace('www.', '')}${req.url}`);
+  }
+
+  next();
+});
 
 app.use(
   serveStatic(path.join(__dirname, 'dist'), {
