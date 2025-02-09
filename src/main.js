@@ -105,10 +105,17 @@ if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
 const storedVersion = localStorage.getItem('appVersion');
 const currentVersion = process.env.VUE_APP_VERSION; // Get version from vue.config.js
 
-if (storedVersion !== currentVersion) {
-  console.log(`New version detected! Reloading...`);
+// 🚀 If stored version is missing or different, force a cache refresh
+if (!storedVersion || storedVersion !== currentVersion) {
+  console.log("🚀 New version detected! Clearing cache & reloading...");
+  
+  // 🔥 Clear all caches before reloading
+  caches.keys().then((names) => {
+    names.forEach((name) => caches.delete(name));
+  });
+
   localStorage.setItem('appVersion', currentVersion);
-  window.location.reload(true); // Force a full refresh
+  window.location.href = window.location.pathname + '?v=' + new Date().getTime();
 }
 
 

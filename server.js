@@ -69,7 +69,7 @@ app.use(
         res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
         res.setHeader('Pragma', 'no-cache');
         res.setHeader('Expires', '0');
-      } else if (/\.(js|css|json|png|jpg|svg|woff2?)$/.test(filePath)) {
+      } else {
         res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       }
     },
