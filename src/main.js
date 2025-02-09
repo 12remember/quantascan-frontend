@@ -101,11 +101,16 @@ if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
   axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 }
 
-// 🚀 Force a refresh when a new version is detected
 const storedVersion = localStorage.getItem('appVersion');
-const currentVersion = process.env.VUE_APP_VERSION; // Get version from vue.config.js
+const currentVersion = process.env.VUE_APP_VERSION; // Fallback
 
-// 🚀 If stored version is missing or different, force a cache refresh
+// Expose version globally for testing
+window.VUE_APP_VERSION = currentVersion;
+
+console.log("📂 Stored Version (Local PC):", storedVersion);
+console.log("🌍 Current Version (Server):", window.VUE_APP_VERSION);
+
+// 🚀 If stored version is missing OR different, force a refresh
 if (!storedVersion || storedVersion !== currentVersion) {
   console.log("🚀 New version detected! Clearing cache & reloading...");
   
