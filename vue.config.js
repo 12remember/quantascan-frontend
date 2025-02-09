@@ -1,7 +1,7 @@
 const packageJson = require('./package.json');
 const { routes } = require('./src/config/PageRoutes.js');
 
-module.exports = defineConfig({
+module.exports = {
   transpileDependencies: true,
 
   pluginOptions: {
@@ -20,4 +20,4 @@ module.exports = defineConfig({
       return args;
     });
   },
-});
+};
