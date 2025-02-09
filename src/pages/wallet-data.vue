@@ -376,7 +376,7 @@ export default {
     link: [
       {
         rel: 'canonical',
-        href: 'https://www.quantascan.io/wallet-data'
+        href: 'https://quantascan.io/wallet-data'
       }
 ]
   },

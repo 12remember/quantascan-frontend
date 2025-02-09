@@ -101,33 +101,15 @@ if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
   axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 }
 
-const checkForUpdates = async () => {
-  console.log('Checking for updates...');
-  try {
-    const response = await fetch('/version.json');
-    if (!response.ok) {
-      throw new Error(`Failed to fetch version.json: ${response.status}`);
-    }
-    const { version } = await response.json();
-    const currentVersion = localStorage.getItem('appVersion');
+// 🚀 Force a refresh when a new version is detected
+const storedVersion = localStorage.getItem('appVersion');
+const currentVersion = process.env.VUE_APP_VERSION; // Get version from vue.config.js
 
-    console.log('Current version:', currentVersion);
-    console.log('New version:', version);
-
-    if (currentVersion && currentVersion !== version) {
-      console.log('New version detected. Reloading...');
-      localStorage.setItem('appVersion', version);
-      window.location.reload(true); // Force reload
-    } else {
-      console.log('App is up-to-date.');
-      localStorage.setItem('appVersion', version);
-    }
-  } catch (error) {
-    console.error('Error checking for updates:', error);
-  }
-};
-
-checkForUpdates();
+if (storedVersion !== currentVersion) {
+  console.log(`New version detected! Reloading...`);
+  localStorage.setItem('appVersion', currentVersion);
+  window.location.reload(true); // Force a full refresh
+}
 
 
 

@@ -63,18 +63,19 @@ app.use((req, res, next) => {
 
 app.use(
   serveStatic(path.join(__dirname, 'dist'), {
-    etag: true,
+    etag: false, // Disable ETag so browsers don’t compare versions
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html')) {
-        // Prevent caching for index.html
         res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
       } else if (/\.(js|css|json|png|jpg|svg|woff2?)$/.test(filePath)) {
-        // Cache static assets with a long expiration for hashed files
         res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       }
     },
   })
 );
+
 
 
 if (process.env.NODE_ENV !== 'production') {

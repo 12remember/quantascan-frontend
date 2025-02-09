@@ -51,7 +51,7 @@ else {
 
 ## More information
 
-[Quantascan.io](https://www.quantascan.io "Quantascan.io")
+[Quantascan.io](https://quantascan.io "Quantascan.io")
 
 [The Quantum resistant Ledger](https://www.theqrl.org/ "The QRL homepage")
 
