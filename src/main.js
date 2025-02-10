@@ -101,25 +101,40 @@ if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
   axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 }
 
-// 🚀 Check stored vs current version
 const storedVersion = localStorage.getItem('appVersion');
-const currentVersion = process.env.VUE_APP_VERSION;
+const currentVersion = process.env.VUE_APP_VERSION; // Fallback for safety
+
+// 🔍 Expose version for debugging in DevTools
+window.VUE_APP_VERSION = currentVersion;
+
+console.log("📂 Stored Version:", storedVersion);
+console.log("🌍 Current Version:", currentVersion);
 
 // 🚀 If stored version is missing OR different, force a refresh
 if (!storedVersion || storedVersion !== currentVersion) {
   console.log("🚀 New version detected! Clearing cache & reloading...");
-  
-  // 🔥 Clear all service worker caches
+
+  // 🔥 Clear all caches before reloading
   if ('caches' in window) {
     caches.keys().then((names) => {
       names.forEach((name) => caches.delete(name));
     });
   }
 
-  // 🔥 Force a real reload by bypassing the cache
+  // 🔥 Clear Service Worker (if applicable)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      registrations.forEach((reg) => reg.unregister());
+    });
+  }
+
+  // 🔥 Force localStorage update
   localStorage.setItem('appVersion', currentVersion);
-  window.location.reload(true); // Ensures fresh reload
+
+  // ✅ Reload without modifying URL (modern way)
+  window.location.reload();
 }
+
 
 
 
