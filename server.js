@@ -66,15 +66,26 @@ app.use(
     etag: false, // Disable ETag so browsers don’t compare versions
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html')) {
+        // Forceer altijd een nieuwe versie van index.html
         res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
         res.setHeader('Pragma', 'no-cache');
         res.setHeader('Expires', '0');
-      } else {
+      } else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
+        // Zorg dat statische assets correct gecachet worden
         res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
       }
     },
   })
 );
+
+// **Fallback for SPA (Zorg dat de headers hier ook correct zijn)**
+app.get('*', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
 
 
 
