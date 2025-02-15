@@ -77,6 +77,7 @@ const routes = [
     path: '/site-statistics',
     name: 'siteStatistics',
     component: siteStatistics,
+    beforeEnter: routerGuard,
   },
   // {
   //   path: '/blog',

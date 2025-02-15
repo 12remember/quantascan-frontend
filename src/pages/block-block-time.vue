@@ -19,10 +19,6 @@
           <div class="note-icon">
             <v-icon name="exclamation" scale="4" />
           </div>
-          <div class="note-content">
-            <h4><b>Displayed Graph has Issues</b></h4>
-            <p>The graph below has some issues. Some peaks in blocktime found is probably due to the change from winter to summertime </p>
-          </div>
         </div>
         <div id="chart">
           <Highcharts class="chart" :constructor-type="'stockChart'" :options="chartOptions" :updateArgs="updateArgs" ref="chart">

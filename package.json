@@ -1,9 +1,8 @@
 {
   "name": "Quantascan.io",
-  "version": "0.2.4",
+  "version": "0.2.4.1",
   "private": true,
   "scripts": {
-
     "build": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint",
     "build-report": "vue-cli-service build --report",
@@ -12,8 +11,8 @@
     "start": "node server.js"
   },
   "heroku": {
-  "node_modules_cache": false
-},
+    "node_modules_cache": false
+  },
   "dependencies": {
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",
@@ -34,9 +33,9 @@
     "highcharts-vue": "^1.4.0",
     "is-valid-path": "^0.1.1",
     "mem": "^9.0.1",
-    "node-sass": "^6.0.1",
     "nth-check": "^2.0.1",
     "permissions-policy": "^0.6.0",
+    "sass": "^1.85.0",
     "v-clipboard": "^2.2.3",
     "vue": "^2.6.14",
     "vue-awesome": "^4.3.1",

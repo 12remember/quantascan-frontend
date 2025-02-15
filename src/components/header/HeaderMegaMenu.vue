@@ -8,7 +8,7 @@
         <v-icon class=" p-l-5" name="caret-down" scale="1.5" />
       </template>
       <div class="row m-r-10 m-l-10">
-        <div class="col-lg-4 col-md-4">
+        <div class="col-lg-3 col-md-3">
           <div class=" dropdown-header">Block</div>
           <ul class="nav d-flex align-items-start  flex-column p-b-30">
             <router-link class="d-flex" :to="{ name: 'block-average-block-size', params: {} }">
@@ -22,7 +22,7 @@
             </router-link>
           </ul>
         </div>
-        <div class="col-lg-4 col-md-4">
+        <div class="col-lg-3 col-md-3">
           <div class="dropdown-header">Network</div>
           <ul class="nav d-flex align-items-start flex-column p-b-30">
             <router-link :to="{ name: 'network-transactions', params: {} }">
@@ -39,7 +39,7 @@
             </router-link>
           </ul>
         </div>
-        <div class="col-lg-4 col-md-4">
+        <div class="col-lg-3 col-md-3">
           <div class="dropdown-header">Wallet</div>
           <ul class="nav d-flex align-items-start flex-column p-b-20">
             <router-link :to="{ name: 'wallet-distribution', params: {} }">
@@ -60,11 +60,11 @@
             </router-link>
           </ul>
         </div>
-        <div class="col-lg-4 col-md-4" v-if="showThis">
-          <div class="dropdown-header">Tools</div>
-          <ul class="nav d-flex flex-column">
-            <router-link :to="{ name: 'tools-accumulation-calculator', params: {} }">
-              Accumulation Calculator
+        <div class="col-lg-3 col-md-3">
+          <div class="dropdown-header"></div>
+          <ul class="nav d-flex align-items-start flex-column p-b-20">
+            <router-link :to="{ name: 'siteStatistics', params: {} }">
+              Site Statistics
             </router-link>
           </ul>
         </div>
