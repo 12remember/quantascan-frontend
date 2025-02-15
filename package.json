@@ -37,7 +37,7 @@
     "permissions-policy": "^0.6.0",
     "sass": "^1.85.0",
     "v-clipboard": "^2.2.3",
-    "vue": "^2.6.14",
+    "vue": "^3.0.0",
     "vue-awesome": "^4.3.1",
     "vue-good-table": "^2.21.11",
     "vue-gtag": "^1.16.1",
