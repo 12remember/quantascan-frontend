@@ -3,15 +3,7 @@
   <!-- begin page-header -->
   <h1 class="page-header">Block Reward Decay</h1>
   <p class="page-description"> Mean block reward for miners</p>
-  <div class="note note-info">
-    <div class="note-icon">
-      <v-icon name="exclamation" scale="4" />
-    </div>
-    <div class="note-content">
-      <h4><b>Chart is distorted</b></h4>
-      <p> Below Chart is distorted caused by the difference in datapoint interval</p>
-    </div>
-  </div>
+
 
   <!-- end page-header -->
 

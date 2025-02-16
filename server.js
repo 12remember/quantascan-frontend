@@ -89,16 +89,13 @@ app.get('*', (req, res) => {
 
 
 
+
 if (process.env.NODE_ENV !== 'production') {
   app.use((req, res, next) => {
     console.log(`Serving: ${req.path}`);
     next();
   });
 }
-// Fallback for SPA
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
 
 // Start Server
 app.listen(PORT, () => {

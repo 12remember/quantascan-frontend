@@ -2,7 +2,7 @@ const packageJson = require('./package.json');
 const { routes } = require('./src/config/PageRoutes.js');
 
 module.exports = {
-  transpileDependencies: [], // ✅ Must be an array, not a boolean
+  transpileDependencies: [], 
 
   pluginOptions: {
     sitemap: {
