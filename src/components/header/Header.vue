@@ -37,9 +37,9 @@
         </form>
       </div>
 
-      <router-link class="btn btn-primary m-10 d-flex align-items-center justify-content-center" :to="{ name: 'markets', params: {} }">
+      <a href="https://www.theqrl.org/markets/" target="_blank" class="btn btn-primary m-10 d-flex align-items-center justify-content-center">
         <span class="m-0" style="font-size:18px;">Trade Quanta</span>
-      </router-link>
+      </a>
 
     </div>
     <!-- end header navigation right -->

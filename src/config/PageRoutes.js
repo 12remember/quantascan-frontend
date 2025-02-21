@@ -21,7 +21,7 @@ const siteStatistics = () => import('../pages/info-statistics.vue')
 
 // const toolsAccumulationCalculator = () => import('../pages/tools-accumulation-calculator.vue')
 const walletData = () => import('../pages/wallet-data.vue')
-const infoMarkets = () => import('../pages/info-markets.vue')
+
 const infoSiteFAQ = () => import('../pages/info-site-faq.vue')
 // const infoSiteParticipating = () => import('../pages/info-site-participating.vue')
 
@@ -53,12 +53,6 @@ const routes = [
     path: '/404',
     name: '404',
     component: fourZerofour,
-    beforeEnter: routerGuard,
-  },
-  {
-    path: '/markets',
-    name: 'markets',
-    component: infoMarkets,
     beforeEnter: routerGuard,
   },
   {

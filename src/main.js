@@ -95,7 +95,7 @@ if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
   }, router);
 
 } else {
-  axios.defaults.baseURL = 'http://127.0.0.1:8000'
+  axios.defaults.baseURL = 'http://127.0.0.1:8000' 
   //axios.defaults.baseURL = 'https://analytics.quantascan.io'
   axios.defaults.xsrfCookieName = 'csrftoken'
   axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
