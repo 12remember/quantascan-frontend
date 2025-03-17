@@ -76,16 +76,17 @@ Vue.component('vue-slider', VueSlider)
 Vue.component('loading-spinner-dot', HollowDotsSpinner)
 Vue.component('v-icon', Icon)
 
+// Initialize Vue Router in history mode
 const router = new VueRouter({
   mode: 'history',
   routes
-})
+});
 
-
-if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
-  axios.defaults.baseURL = 'https://analytics.quantascan.io'
-  axios.defaults.xsrfCookieName = 'csrftoken'
-  axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+// Configure Axios and analytics based on the environment
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+  axios.defaults.baseURL = 'https://analytics.quantascan.io';
+  axios.defaults.xsrfCookieName = 'csrftoken';
+  axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
   Vue.use(VueGtag, {
     config: {
       id: process.env.GOOGLE_GTAG
@@ -93,47 +94,53 @@ if (process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'staging') {
     appName: 'Quantascan.io',
     pageTrackerScreenviewEnabled: true
   }, router);
-
 } else {
-  axios.defaults.baseURL = 'http://127.0.0.1:8000' 
-  //axios.defaults.baseURL = 'https://analytics.quantascan.io'
-  axios.defaults.xsrfCookieName = 'csrftoken'
-  axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+  axios.defaults.baseURL = 'http://127.0.0.1:8000';
+  axios.defaults.xsrfCookieName = 'csrftoken';
+  axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 }
 
-const storedVersion = localStorage.getItem('appVersion');
-const currentVersion = process.env.VUE_APP_VERSION; // Fallback for safety
-
-// 🔍 Expose version for debugging in DevTools
-window.VUE_APP_VERSION = currentVersion;
-
-console.log("📂 Stored Version:", storedVersion);
-console.log("🌍 Current Version:", currentVersion);
-
-// 🚀 If stored version is missing OR different, force a refresh
-if (!storedVersion || storedVersion !== currentVersion) {
-  console.log("🚀 New version detected! Clearing cache & reloading...");
-
-  // 🔥 Clear all caches before reloading
-  if ('caches' in window) {
-    caches.keys().then((names) => {
-      names.forEach((name) => caches.delete(name));
-    });
+// Retrieve the current version injected via environment variables
+const currentVersion = process.env.VUE_APP_VERSION;
+if (!currentVersion) {
+  console.warn('No current version specified in VUE_APP_VERSION. Skipping version check.');
+} else {
+  // Expose the version for debugging in non-production environments
+  if (process.env.NODE_ENV !== 'production') {
+    window.VUE_APP_VERSION = currentVersion;
   }
 
-  // 🔥 Clear Service Worker (if applicable)
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-      registrations.forEach((reg) => reg.unregister());
-    });
+  const storedVersion = localStorage.getItem('appVersion');
+
+  console.log("📂 Stored Version:", storedVersion);
+  console.log("🌍 Current Version:", currentVersion);
+
+  // If there's no stored version or the versions differ, clear caches and reload
+  if (!storedVersion || storedVersion !== currentVersion) {
+    console.log("🚀 New version detected! Clearing caches & reloading...");
+
+    // Clear all browser caches
+    if ('caches' in window) {
+      caches.keys()
+        .then(names => Promise.all(names.map(name => caches.delete(name))))
+        .catch(err => console.error("Error clearing caches:", err));
+    }
+
+    // Unregister all service workers, if any exist
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations()
+        .then(registrations => Promise.all(registrations.map(reg => reg.unregister())))
+        .catch(err => console.error("Error unregistering service workers:", err));
+    }
+
+    // Update the stored version in localStorage to prevent an infinite reload loop
+    localStorage.setItem('appVersion', currentVersion);
+
+    // Reload the page to fetch the latest assets and HTML
+    window.location.reload();
   }
-
-  // 🔥 Force localStorage update
-  localStorage.setItem('appVersion', currentVersion);
-
-  // ✅ Reload without modifying URL (modern way)
-  window.location.reload();
 }
+
 
 
 

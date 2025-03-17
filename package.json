@@ -1,6 +1,6 @@
 {
   "name": "Quantascan.io",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build --mode production",
@@ -21,7 +21,6 @@
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "critical": "^4.0.1",
     "csurf": "^1.11.0",
     "epic-spinners": "^1.1.0",
     "esm": "^3.2.25",
