@@ -112,9 +112,6 @@ if (!currentVersion) {
 
   const storedVersion = localStorage.getItem('appVersion');
 
-  console.log("📂 Stored Version:", storedVersion);
-  console.log("🌍 Current Version:", currentVersion);
-
   // If there's no stored version or the versions differ, clear caches and reload
   if (!storedVersion || storedVersion !== currentVersion) {
     console.log("🚀 New version detected! Clearing caches & reloading...");

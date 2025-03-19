@@ -20,4 +20,9 @@ module.exports = {
       return args;
     });
   },
+  configureWebpack: {
+    optimization: {
+      usedExports: true, // Enables tree shaking
+    },
+  },
 };

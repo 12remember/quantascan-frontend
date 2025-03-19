@@ -21,7 +21,6 @@ const siteStatistics = () => import('../pages/info-statistics.vue')
 
 // const toolsAccumulationCalculator = () => import('../pages/tools-accumulation-calculator.vue')
 const walletData = () => import('../pages/wallet-data.vue')
-
 const infoSiteFAQ = () => import('../pages/info-site-faq.vue')
 // const infoSiteParticipating = () => import('../pages/info-site-participating.vue')
 
@@ -71,7 +70,6 @@ const routes = [
     path: '/site-statistics',
     name: 'siteStatistics',
     component: siteStatistics,
-    beforeEnter: routerGuard,
   },
   // {
   //   path: '/blog',

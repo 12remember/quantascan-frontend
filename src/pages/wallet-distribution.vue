@@ -79,96 +79,117 @@
     </div>
     <!-- end col-12 -->
      <!-- Wallet Categories Statistics -->
-     <div class="col-xl-12 d-flex flex-wrap justify-content-between p-t-20">
-      
-      <template v-if="isLoading.walletCategories">
-        <div class="d-flex align-items-center min-h-400">
-          <loading-spinner-dot class="center" :animation-duration="1000" :dot-size="55" color="var(--qrl-tertaire)" />
-        </div>
-      </template>
-      <template v-else>
-        <h2 class="col-xl-12  statistics-title m-t-25">Wallet Categories</h2>
-          
-          <div class="col-xl-3 col-md-6 col-sm-12" v-for="(category, index) in walletCategoriesStats" :key="'category-'+index">
-            <div class="p-20 text-left mb-4">
-              <h3>{{ category.name }}</h3>
-              <p class="stat-value">{{ category.count }} wallets</p>
-              <div class="d-flex flex-row ">
-              <p style="font-size:20px">{{formatToReadableNumberWithShor(category.totalValue).quanta}}</p>
-              <p style="font-size:12px" class="p-r-5">{{formatToReadableNumberWithShor(category.totalValue).shor}}</p>
-            </div>
-              <p class="stat-value">{{ category.percentage }}% of total supply</p>
-            </div>
-                  <!-- Show button only if category is "Exchange" -->
-              <template v-if="category.name === 'Exchange' && exchangeWallets.length > 0">
+     <div class="container">
+  <!-- Wallet Categories Header -->
+  <div class="row">
+    <div class="col-xl-12">
+      <h2 class="statistics-title m-t-25">Wallet Categories</h2>
+    </div>
+  </div>
+
+  <!-- Wallet Categories Cards Grid -->
+  <div class="row">
+    <template v-if="isLoading.walletCategories">
+      <div class="col-xl-12 d-flex align-items-center min-h-400">
+        <loading-spinner-dot
+          class="center"
+          :animation-duration="1000"
+          :dot-size="55"
+          color="var(--qrl-tertaire)"
+        />
+      </div>
+    </template>
+    <template v-else>
+      <div
+        v-for="(category, index) in walletCategoriesStats"
+        :key="'category-' + index"
+        class="col-xl-3 col-md-6 col-sm-12"
+      >
+        <div class="p-20 text-left mb-4">
+          <h3>{{ category.name }}</h3>
+          <p class="stat-value">{{ category.count }} wallets</p>
+          <div class="d-flex flex-row">
+            <p style="font-size:20px">
+              {{ formatToReadableNumberWithShor(category.totalValue).quanta }}
+            </p>
+            <p style="font-size:12px" class="p-r-5">
+              {{ formatToReadableNumberWithShor(category.totalValue).shor }}
+            </p>
+          </div>
+          <p class="stat-value">{{ category.percentage }}% of total supply</p>
+          <!-- Show button only on the Exchange card -->
+          <template v-if="category.name === 'Exchange' && exchangeWallets.length > 0">
             <button class="btn btn-secondary mt-3" @click="showExchanges = !showExchanges">
               {{ showExchanges ? "Hide Exchange Addresses" : "Show Exchange Addresses" }}
             </button>
           </template>
-    
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <!-- Exchange Wallets Table Row (full width) -->
+  <div class="row" v-if="showExchanges">
+    <div class="col-xl-12">
+      <h3 class="page-header">Known Exchange Wallets</h3>
+      <template v-if="isLoading.exchangeWallets">
+        <div class="d-flex align-items-center min-h-400">
+          <loading-spinner-dot
+            class="center"
+            :animation-duration="1000"
+            :dot-size="55"
+            color="var(--qrl-tertaire)"
+          />
         </div>
       </template>
+      <template v-else>
+        <vue-good-table
+          ref="exchangeList"
+          :columns="exchangeColumns"
+          :rows="exchangeWallets"
+          :lineNumbers="false"
+          :search-options="{ enabled: false }"
+          :pagination-options="{ enabled: true, position: 'bottom', perPage: 20, dropdownAllowAll: false }"
+          :sort-options="{ enabled: false, initialSortBy: { field: 'address_balance', type: 'desc' } }"
+          styleClass="vgt-table"
+        >
+          <template slot="table-row" slot-scope="props">
+            <span v-if="props.column.field === 'address_balance'">
+              <div class="d-flex flex-row justify-content-end">
+                <p style="font-size:20px">
+                  {{ formatToReadableNumberWithShor(props.row.address_balance).quanta }}
+                </p>
+                <p style="font-size:12px" class="p-r-5">
+                  {{ formatToReadableNumberWithShor(props.row.address_balance).shor }}
+                </p>
+              </div>
+            </span>
+            <span
+              v-else-if="props.column.field === 'wallet_address'"
+              class="richlist-link"
+              @click="onCellClick(props.row)"
+            >
+              <p class="text-break">
+                {{ smallerWalletAddress(props.row.wallet_address) }}
+                <v-icon name="link" scale="1" />
+              </p>
+            </span>
+            <span v-else-if="props.column.field === 'percentage_of_supply'">
+              <p class="d-flex justify-content-end" style="font-size:20px">
+                {{ props.row.percentage_of_supply }}%
+              </p>
+            </span>
+            <span v-else>
+              {{ props.formattedRow[props.column.field] }}
+            </span>
+          </template>
+        </vue-good-table>
+      </template>
     </div>
+  </div>
+</div>
 
-    <div class="col-xl-6">
-      
-
-       
-            <div v-if="showExchanges">
-            <!-- Exchange Wallets Table -->
-        
-              <h3 class="page-header">Known Exchange Wallets</h3>
-   
-
-              <template v-if="isLoading.exchangeWallets">
-                <div class="d-flex align-items-center min-h-400">
-                  <loading-spinner-dot class="center" :animation-duration="1000" :dot-size="55" color="var(--qrl-tertaire)" />
-                </div>
-              </template>
-
-              <template v-else>
-
-                <vue-good-table
-                  ref='exchangeList'
-                  :columns="exchangeColumns"
-                  :rows="exchangeWallets"
-                  :lineNumbers="false"
-                  :search-options="{ enabled: false }"
-                  :pagination-options="{ enabled: true, position: 'bottom', perPage: 20, dropdownAllowAll: false }"
-                  :sort-options="{enabled: false, initialSortBy: { field: 'address_balance', type: 'desc' }}"
-                  styleClass="vgt-table">
-
-                  <template slot="table-row" slot-scope="props">
-                    <span v-if="props.column.field == 'address_balance'">
-                      <div class="d-flex flex-row justify-content-end">
-                        <p style="font-size:20px">{{formatToReadableNumberWithShor(props.row.address_balance).quanta}}</p>
-                        <p style="font-size:12px" class="p-r-5">{{formatToReadableNumberWithShor(props.row.address_balance).shor}}</p>
-                      </div>
-                    </span>
-                    <span v-else-if="props.column.field == 'wallet_address'" class="richlist-link" @click="onCellClick(props.row)">
-                      <p class="text-break">{{smallerWalletAddress(props.row.wallet_address)}}
-                        <v-icon name="link" scale="1" />
-                      </p>
-                    </span>
-                    <span v-else-if="props.column.field == 'percentage_of_supply'">
-                      <p class="d-flex justify-content-end" style="font-size:20px">
-                        {{ props.row.percentage_of_supply }}%
-                      </p>
-                    </span>
-                    <span v-else>
-                      {{ props.formattedRow[props.column.field] }}
-                    </span>
-                  </template>
-                </vue-good-table>
-              </template>
-          
-
-
-
-          </div>
-       
-
-    </div>
+    
   </div>
   <!-- end row -->
 
