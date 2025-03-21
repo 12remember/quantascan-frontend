@@ -80,11 +80,12 @@ export default {
       this.pageOptions.pageMobileMegaMenu = !this.pageOptions.pageMobileMegaMenu;
     },
     checkForm(e) {
-      if (this.inputSearchField.length == 79 && this.inputSearchField.startsWith('Q')) {
+      const trimmedInput = this.inputSearchField.trim();
+      if (trimmedInput.length === 79 && trimmedInput.startsWith('Q')) {
         this.$router.push({
           name: 'wallet-data',
           params: {
-            qrl_address: this.inputSearchField
+            qrl_address: trimmedInput
           }
         });
       } else {
@@ -92,13 +93,14 @@ export default {
           position: 'top-end',
           icon: 'error',
           title: 'Invalid Address',
-          text: 'Please in check the QRL Address',
+          text: 'Please check the QRL Address',
           showConfirmButton: false,
           timer: 2000
         });
         e.preventDefault();
       }
     }
+
   }
 };
 

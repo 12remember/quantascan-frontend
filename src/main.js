@@ -1,3 +1,32 @@
+
+// Place this at the very top of main.js
+const currentVersion = process.env.VUE_APP_VERSION;
+if (currentVersion) {
+  const storedVersion = localStorage.getItem('appVersion');
+  if (!storedVersion || storedVersion !== currentVersion) {
+    console.log("🚀 New version detected! Clearing caches & reloading...");
+    // Clear caches if available
+    if ('caches' in window) {
+      caches.keys()
+        .then(names => Promise.all(names.map(name => caches.delete(name))))
+        .catch(err => console.error("Error clearing caches:", err));
+    }
+    // Unregister service workers if any (optional)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations()
+        .then(registrations => Promise.all(registrations.map(reg => reg.unregister())))
+        .catch(err => console.error("Error unregistering service workers:", err));
+    }
+    localStorage.setItem('appVersion', currentVersion);
+    window.location.reload();
+  }
+} else {
+  console.warn('No current version specified in VUE_APP_VERSION.');
+}
+
+
+
+
 import Vue from 'vue'
 
 import routes from './config/PageRoutes'
@@ -55,6 +84,9 @@ import App from './App.vue'
 Vue.config.productionTip = false
 
 
+
+
+
 //general
 Vue.use(VueRouter)
 Vue.use(VueGoodTable)
@@ -100,43 +132,7 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
   axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 }
 
-// Retrieve the current version injected via environment variables
-const currentVersion = process.env.VUE_APP_VERSION;
-if (!currentVersion) {
-  console.warn('No current version specified in VUE_APP_VERSION. Skipping version check.');
-} else {
-  // Expose the version for debugging in non-production environments
-  if (process.env.NODE_ENV !== 'production') {
-    window.VUE_APP_VERSION = currentVersion;
-  }
 
-  const storedVersion = localStorage.getItem('appVersion');
-
-  // If there's no stored version or the versions differ, clear caches and reload
-  if (!storedVersion || storedVersion !== currentVersion) {
-    console.log("🚀 New version detected! Clearing caches & reloading...");
-
-    // Clear all browser caches
-    if ('caches' in window) {
-      caches.keys()
-        .then(names => Promise.all(names.map(name => caches.delete(name))))
-        .catch(err => console.error("Error clearing caches:", err));
-    }
-
-    // Unregister all service workers, if any exist
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations()
-        .then(registrations => Promise.all(registrations.map(reg => reg.unregister())))
-        .catch(err => console.error("Error unregistering service workers:", err));
-    }
-
-    // Update the stored version in localStorage to prevent an infinite reload loop
-    localStorage.setItem('appVersion', currentVersion);
-
-    // Reload the page to fetch the latest assets and HTML
-    window.location.reload();
-  }
-}
 
 
 

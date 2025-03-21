@@ -74,13 +74,8 @@ app.use(
 );
 
 // Fallback for SPA with Version Query Parameter added for index.html
+// Fallback for SPA: Always serve index.html with no-cache headers
 app.get('*', (req, res) => {
-  // If the request URL doesn't include a version query parameter, redirect with one.
-  if (!req.query.v) {
-    const separator = req.originalUrl.includes('?') ? '&' : '?';
-    return res.redirect(302, req.originalUrl + separator + 'v=' + version);
-  }
-  // Ensure no caching for index.html
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
