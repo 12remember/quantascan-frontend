@@ -8,6 +8,7 @@
     "build-report": "vue-cli-service build --report",
     "heroku-postbuild": "NODE_ENV=production npm run build && echo '{\"version\": \"'$(date +%s)$((RANDOM % 1000))'\"}' > dist/version.json",
     "serve": "vue-cli-service serve --mode development",
+    "dev": "vue-cli-service serve --mode development",
     "start": "node server.js"
   },
   "heroku": {
