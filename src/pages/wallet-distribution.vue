@@ -76,6 +76,28 @@
         </template>
       </div>
       <!-- end col-6 -->
+       
+          <div class="col-xl-6 col-md-10 col-sm-12 d-flex flex-column justify-content-between p-b-40">
+        <span style="font-size:20px ;" class="p-r-5 ">Top <span
+              style="font-size:20px ; color:var(--qrl-tertaire)">{{topWalletsCumulative.wallets}}</span> Wallets</span>
+          <span style="font-size:20px ;">Posses <span
+              style="font-size:20px ; color:var(--qrl-tertaire)">{{topWalletsCumulative.cumulative_percentage}}% ({{topWalletsCumulative.cumulative_balance}})</span> of circulating Quanta</span>
+
+      <div class="p-20">
+        <vue-slider
+          v-bind="sliderWalletsTop"
+          v-model="sliderWalletsTop.value"
+          :data="sliderWalletsTop.data"
+          :tooltip-formatter="tooltipFormatter3"
+          :tooltip-placement="['bottom']"
+          :marks="marksWalletsTopManual"
+        />
+
+
+
+      </div>
+  </div>
+
     </div>
     <!-- end col-12 -->
      <!-- Wallet Categories Statistics -->
@@ -236,15 +258,21 @@ export default {
       },
       tooltipFormatter1: '{value} %',
       tooltipFormatter2: '{value}+ Quanta',
+      tooltipFormatter3: (value) => {
+        const info = this.walletsCumulativeDistribution[value];
+        return info ? `top ${info.wallets} wallets` : 'top wallets';
+      },
       marksSlider1: {
-        '0.1': '0 %',
+        '0': '0 %',
         '100': '100 %',
       },
+
+      marksWalletsTopManual: { },
       sliderOptionsPercentageOwned: {
         value: 5,
-        min: 0.1,
-        max: 100,
-        interval: 0.1,
+        //min: 1,
+        //max: 100,
+        interval: 1,
         useKeyboard: true,
         height: '30px',
         dotSize: '30px',
@@ -258,6 +286,18 @@ export default {
         useKeyboard: true,
         tooltip: 'always',
       },
+      sliderWalletsTop: {
+        tooltip: 'always',
+        interval: 1,
+        value: 0,           // Start with index 0
+        min: 0,             // Minimum index
+        max: 11,  
+        height: '30px',
+        dotSize: '30px',
+        useKeyboard: true,
+        //data: []     // komt uit je API
+      },
+
       exchangeColumns: [
 
       {
@@ -379,18 +419,33 @@ export default {
 
   computed: {
     sliderDistributionPercentage() {
-      const startPercentage = 1000 - this.sliderOptionsPercentageOwned.value * 10
-      const selectInList_percentageOwned = this.distributionByPercentage.percentageOwned.slice(startPercentage, 1000)
-      const selectInList_volumnOwned = this.distributionByPercentage.volumnOwned.slice(startPercentage, 1000)
-      const percentageOwned = selectInList_percentageOwned.reduce((a, b) => a + b, 0)
-      const volumnOwned = this.formatToReadableNumberWithoutShor(selectInList_volumnOwned.reduce((a, b) => a + b, 0))
+      const arr = this.distributionByPercentage.percentageOwned;
+      const arrVol = this.distributionByPercentage.volumnOwned;
+      const maxLen = arr.length; // 100
+      const sliderVal = Math.min(Math.max(this.sliderOptionsPercentageOwned.value, 1), maxLen);
+      const startIdx = maxLen - sliderVal;
+      const selectInList_percentageOwned = arr.slice(startIdx, maxLen);
+      const selectInList_volumnOwned = arrVol.slice(startIdx, maxLen);
+      const percentageOwned = selectInList_percentageOwned.reduce((a, b) => a + b, 0);
+      const volumnOwned = this.formatToReadableNumberWithoutShor(selectInList_volumnOwned.reduce((a, b) => a + b, 0));
 
       return {
         'percentageOwned': percentageOwned,
         'volumnOwned': volumnOwned
       }
-
     },
+    topWalletsCumulative() {
+      const index = this.sliderWalletsTop.value;
+      const info = this.walletsCumulativeDistribution[index] || { cumulative_percentage: 0, cumulative_balance: 0, wallets: 0 };
+      return {
+        wallets: info.wallets,
+        cumulative_percentage: (info.cumulative_percentage || 0).toFixed(2),
+        cumulative_balance: this.formatToReadableNumberWithoutShor(info.cumulative_balance)
+      };
+    },
+
+
+
 
     getNumberOfWalletHoldingX() {
       let targetIndex = this.sliderOptionsWalletsHoldingX.data.find(item => item.amount === this.sliderOptionsWalletsHoldingX.value);
@@ -457,7 +512,7 @@ export default {
     },
 
     formatToReadablePercentage(perct) {
-      const perctSplit = perct.toFixed(12).toString().split('.')
+      const perctSplit = perct.toFixed(2).toString().split('.')
       return {
         forDot: perctSplit[0],
         afterDot: perctSplit[1]
@@ -478,6 +533,34 @@ export default {
       this.distributionByPercentage.percentageOwned = response.data.distribution_percentage.percentage_owned;
       this.distributionByPercentage.volumnOwned = response.data.distribution_percentage.volume_owned;
       this.sliderOptionsWalletsHoldingX.data = response.data.distribution_wallets_holding_x;
+      this.walletsCumulativeDistribution = response.data.wallets_cumulative_distribution || [];
+      this.sliderWalletsTop.max = this.walletsCumulativeDistribution.length - 1; // Set max to last index
+      this.sliderWalletsTop.value = 0; // Start at first item
+
+      // Generate marks based on array indices
+      this.marksWalletsTopManual = {};
+      this.walletsCumulativeDistribution.forEach((item, index) => {
+        const walletCount = Number(item.wallets);
+        
+        // Only show marks for key values to avoid overcrowding
+        if ([10, 100, 1000, 10000].includes(walletCount)) {
+          if (walletCount >= 1000) {
+            this.marksWalletsTopManual[index] = (walletCount / 1000) + 'K';
+          } else {
+            this.marksWalletsTopManual[index] = walletCount.toString();
+          }
+        }
+      });
+
+
+      // Debug: log to see the correct mapping
+      console.log('Slider data:', this.sliderWalletsTop.data);
+      console.log('Generated marks (by index):', this.marksWalletsTopManual);
+
+
+
+
+
 
 
 
