@@ -72,7 +72,7 @@ export default {
         yAxis: [{
           title: {
             enabled: true,
-            text: 'Shor'
+            text: 'Quanta'
           },
           opposite: false,
           labels: {
@@ -98,9 +98,9 @@ export default {
             const tooltipText =
               Highcharts.dateFormat('%e %B %Y', date) + '<br/>' +
               '<b>Fee Paid</b>' + '<br/>' +
-              'Average: ' + this.y + ' Shor' + '<br/>' +
-              'Minimal: ' + this.point.transaction_fee_min + ' Shor' + '<br/>' +
-              'Maximum: ' + this.point.transaction_fee_max + ' Shor'
+              'Average: ' + this.y + ' Quanta' + '<br/>' +
+              'Minimal: ' + this.point.transaction_fee_min + ' Quanta' + '<br/>' +
+              'Maximum: ' + this.point.transaction_fee_max + ' Quanta'
             return tooltipText
           },
 
