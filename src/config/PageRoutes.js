@@ -15,7 +15,7 @@ const blockRewardPOS = () => import('../pages/block-block-reward-pos.vue')
 // const networkUniqueWalletsUsed = () => import('../pages/network-unique-wallets-used.vue')
 const networkTransactions = () => import('../pages/network-transactions.vue')
 const networkTotalCirculatingQuanta = () => import('../pages/network-total-circulating-quanta.vue')
-const networkTransactionFee = () => import('../pages/network-transaction-fee.vue')
+// const networkTransactionFee = () => import('../pages/network-transaction-fee.vue')
 // const networkTransactionExchangeVolume = () => import('../pages/network-transaction-exchange-volume.vue')
 const siteStatistics = () => import('../pages/info-statistics.vue')
 
