@@ -161,12 +161,12 @@ const routes = [
         component: networkTotalCirculatingQuanta,
         beforeEnter: router
       },
-      {
-        path: '/network-transaction-fee',
-        name: 'network-transaction-fee',
-        component: networkTransactionFee,
-        beforeEnter: router
-      },
+  //    {
+  //      path: '/network-transaction-fee',
+  //      name: 'network-transaction-fee',
+  //      component: networkTransactionFee,
+  //      beforeEnter: router
+  //    },
   //    {
   //      path: '/network-transaction-exchange-volume',
   //      name: 'network-transaction-exchange-volume',
