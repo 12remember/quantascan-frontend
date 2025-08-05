@@ -28,9 +28,9 @@
             <router-link :to="{ name: 'network-transactions', params: {} }">
               Transaction Count/Volume
             </router-link>
-            <router-link :to="{ name: 'network-transaction-fee', params: {} }">
+            <!-- <router-link :to="{ name: 'network-transaction-fee', params: {} }">
               Transaction Fee
-            </router-link>
+            </router-link> -->
             <router-link :to="{ name: 'network-total-circulating-quanta', params: {} }">
               Total Circulating Quanta
             </router-link>
