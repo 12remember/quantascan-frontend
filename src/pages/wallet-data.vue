@@ -571,7 +571,7 @@ export default {
     calculatePOS() {
       const quanta = this.walletGeneralData.address_balance / 1000000000
       const quantaFixed = quanta.toFixed(0)
-      const numbOfPOSMax = Math.min(Math.max(parseInt(Math.floor(quantaFixed / 10000)), 0), 100);
+      const numbOfPOSMax = Math.min(Math.max(parseInt(Math.floor(quantaFixed / 40000)), 0), 100);
       return numbOfPOSMax
     },
 
