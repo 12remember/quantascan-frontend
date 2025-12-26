@@ -56,9 +56,9 @@
             <span style="font-size:20px;">
               % (
               <span style="color:var(--qrl-tertaire)">
-                {{sliderDistributionPercentage.volumnOwned}})
+                {{sliderDistributionPercentage.volumnOwned}} 
               </span>
-            
+              )
             </span>
           </div>
 
