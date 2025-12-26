@@ -37,16 +37,35 @@
           </div>
         </template>
         <template v-else>
-          <span style=" font-size:20px">Wallets Top <span style="color:var(--qrl-tertaire)">{{sliderOptionsPercentageOwned.value}} %</span></span>
-          <div class="d-flex flex-wrap ">
-            <span style="font-size:20px ;" class="p-r-5 ">Possess </span>
-            <span style="font-size:20px ; color:var(--qrl-tertaire)">
-              {{formatToReadablePercentage(sliderDistributionPercentage.percentageOwned).forDot}}.
-            </span>
-            <span style=" font-size:12px" class="p-r-5">{{formatToReadablePercentage(sliderDistributionPercentage.percentageOwned).afterDot}}</span>
-            <span style="font-size:20px ;"> % of circulating Quanta</span>
-          </div>
-          <span style="font-size:20px ;">A total of {{sliderDistributionPercentage.volumnOwned}}</span>
+          <span style="font-size:20px">
+            Top
+          <span style="color:var(--qrl-tertaire)">
+            {{sliderOptionsPercentageOwned.value}}%
+          </span>
+          wallets
+        </span>
+
+      <div class="d-flex flex-wrap">
+        <span style="font-size:20px;" class="p-r-5">
+          hold
+        </span>
+
+        <span style="font-size:20px; color:var(--qrl-tertaire)">
+          {{formatToReadablePercentage(sliderDistributionPercentage.percentageOwned).forDot}}.
+        </span>
+        <span style="font-size:12px" class="p-r-5">
+          {{formatToReadablePercentage(sliderDistributionPercentage.percentageOwned).afterDot}}
+        </span>
+
+        <span style="font-size:20px;">
+          % of circulating Quanta
+        </span>
+      </div>
+
+      <span style="font-size:20px;">
+        Holds: {{sliderDistributionPercentage.volumnOwned}} Quanta
+      </span>
+
           <div class="p-20">
             <vue-slider v-bind="sliderOptionsPercentageOwned" v-model="sliderOptionsPercentageOwned.value" :tooltip-formatter="tooltipFormatter1"
               :marks="marksSlider1" :tooltip-placement="['bottom']">
@@ -78,10 +97,23 @@
       <!-- end col-6 -->
        
           <div class="col-xl-6 col-md-10 col-sm-12 d-flex flex-column justify-content-between p-b-40">
-        <span style="font-size:20px ;" class="p-r-5 ">Top <span
-              style="font-size:20px ; color:var(--qrl-tertaire)">{{topWalletsCumulative.wallets}}</span> Wallets</span>
-          <span style="font-size:20px ;">Posses <span
-              style="font-size:20px ; color:var(--qrl-tertaire)">{{topWalletsCumulative.cumulative_percentage}}% ({{topWalletsCumulative.cumulative_balance}})</span> of circulating Quanta</span>
+            <span style="font-size:20px;" class="p-r-5">
+            Top
+            <span style="font-size:20px; color:var(--qrl-tertaire)">
+              {{topWalletsCumulative.wallets}}
+            </span>
+            wallets
+          </span>
+
+          <span style="font-size:20px;">
+            hold
+            <span style="font-size:20px; color:var(--qrl-tertaire)">
+              {{topWalletsCumulative.cumulative_percentage}}%
+              ({{topWalletsCumulative.cumulative_balance}})
+            </span>
+            of circulating Quanta
+          </span>
+
 
       <div class="p-20">
         <vue-slider
