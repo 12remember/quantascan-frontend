@@ -37,34 +37,30 @@
           </div>
         </template>
         <template v-else>
-          <span style="font-size:20px">
-            Top
-          <span style="color:var(--qrl-tertaire)">
-            {{sliderOptionsPercentageOwned.value}}%
+          <span style="font-size:20px;">
+            Top {{sliderOptionsPercentageOwned.value}}% wallets
           </span>
-          wallets
-        </span>
 
-      <div class="d-flex flex-wrap">
-        <span style="font-size:20px;" class="p-r-5">
-          hold
-        </span>
+          <div class="d-flex flex-wrap">
+            <span style="font-size:20px;" class="p-r-5">
+              hold
+            </span>
 
-        <span style="font-size:20px; color:var(--qrl-tertaire)">
-          {{formatToReadablePercentage(sliderDistributionPercentage.percentageOwned).forDot}}.
-        </span>
-        <span style="font-size:12px" class="p-r-5">
-          {{formatToReadablePercentage(sliderDistributionPercentage.percentageOwned).afterDot}}
-        </span>
+            <span style="font-size:20px; color:var(--qrl-tertaire)">
+              {{formatToReadablePercentage(sliderDistributionPercentage.percentageOwned).forDot}}.
+            </span>
+            <span style="font-size:12px" class="p-r-5">
+              {{formatToReadablePercentage(sliderDistributionPercentage.percentageOwned).afterDot}}
+            </span>
 
-        <span style="font-size:20px;">
-          % of circulating Quanta
-        </span>
-      </div>
-
-      <span style="font-size:20px;">
-        Holds: {{sliderDistributionPercentage.volumnOwned}} Quanta
-      </span>
+            <span style="font-size:20px;">
+              % (
+              <span style="color:var(--qrl-tertaire)">
+                {{sliderDistributionPercentage.volumnOwned}})
+              </span>
+            
+            </span>
+          </div>
 
           <div class="p-20">
             <vue-slider v-bind="sliderOptionsPercentageOwned" v-model="sliderOptionsPercentageOwned.value" :tooltip-formatter="tooltipFormatter1"
