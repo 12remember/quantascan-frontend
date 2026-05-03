@@ -10,7 +10,7 @@
       <!-- Block Statistics Column -->
       <div class="col-xl-4 col-md-6 col-sm-12">
         <h2 class="statistics-title">Block Statistics</h2>
-        <template v-if="isLoading">
+        <template v-if="isLoadingBlocks">
           <div class="d-flex align-items-center min-h-400">
             <loading-spinner-dot
               class="center"
@@ -31,7 +31,7 @@
       <!-- Transaction Statistics Column -->
       <div class="col-xl-4 col-md-6 col-sm-12">
         <h2 class="statistics-title">Transaction Statistics</h2>
-        <template v-if="isLoading">
+        <template v-if="isLoadingTransactions">
           <div class="d-flex align-items-center min-h-400">
             <loading-spinner-dot
               class="center"
@@ -52,7 +52,7 @@
       <!-- Wallet Statistics Column -->
       <div class="col-xl-4 col-md-6 col-sm-12">
         <h2 class="statistics-title">Wallet Statistics</h2>
-        <template v-if="isLoading">
+        <template v-if="isLoadingWallets">
           <div class="d-flex align-items-center min-h-400">
             <loading-spinner-dot
               class="center"
@@ -93,23 +93,22 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
+      isLoadingBlocks: true,
+      isLoadingTransactions: true,
+      isLoadingWallets: true,
       hasError: false,
-      // Block statistics data – adjust value formatting as needed
       blockStats: [
         { title: "Highest Block Number", value: null },
         { title: "Total Rows in Database", value: null },
         { title: "Missing Blocks", value: null },
         { title: "Compliance Percentage", value: null },
       ],
-      // Transaction statistics data
       transactionStats: [
         { title: "Total Transactions in Blocks", value: null },
         { title: "Total Transactions in Database", value: null },
         { title: "Missing Transactions", value: null },
         { title: "Transaction Compliance Percentage", value: null },
       ],
-      // Wallet statistics – this new section includes total quanta and emission info.
       walletStats: [
         { title: "Total Quanta in Wallets", value: null },
         { title: "Emission", value: null },
@@ -118,73 +117,84 @@ export default {
     };
   },
   methods: {
-  fetchStatistics() {
-    axios.get("api/block-statistics")
-      .then((response) => {
-        const {
-          highest_block_number,
-          total_rows,
-          compliance_percentage,
-          missing_blocks,
-          total_transactions_in_blocks,
-          total_transactions_in_database,
-          missing_transactions,
-          compliance_percentage_transactions,
-          total_quanta_in_wallets,
-          emission,
-          missing_quanta
-        } = response.data;
+    fetchBlockStats() {
+      axios.get("api/block-statistics")
+        .then((response) => {
+          const { highest_block_number, total_rows, missing_blocks, compliance_percentage } = response.data;
+          this.blockStats = [
+            { title: "Highest Block Number", value: highest_block_number },
+            { title: "Total Rows in Database", value: total_rows },
+            { title: "Missing Blocks", value: missing_blocks },
+            { title: "Compliance Percentage", value: `${compliance_percentage}%` },
+          ];
+        })
+        .catch((error) => {
+          console.error("Error fetching block statistics:", error);
+          this.hasError = true;
+        })
+        .finally(() => { this.isLoadingBlocks = false; });
+    },
 
-        this.blockStats = [
-          { title: "Highest Block Number", value: highest_block_number },
-          { title: "Total Rows in Database", value: total_rows },
-          { title: "Missing Blocks", value: missing_blocks },
-          { title: "Compliance Percentage", value: `${compliance_percentage}%` },
-        ];
+    fetchTransactionStats() {
+      axios.get("api/transaction-statistics")
+        .then((response) => {
+          const {
+            total_transactions_in_blocks,
+            total_transactions_in_database,
+            missing_transactions,
+            compliance_percentage_transactions,
+          } = response.data;
+          this.transactionStats = [
+            { title: "Total Transactions in Blocks", value: total_transactions_in_blocks },
+            { title: "Total Transactions in Database", value: total_transactions_in_database },
+            { title: "Missing Transactions", value: missing_transactions },
+            { title: "Transaction Compliance Percentage", value: `${compliance_percentage_transactions}%` },
+          ];
+        })
+        .catch((error) => {
+          console.error("Error fetching transaction statistics:", error);
+          this.hasError = true;
+        })
+        .finally(() => { this.isLoadingTransactions = false; });
+    },
 
-        this.transactionStats = [
-          { title: "Total Transactions in Blocks", value: total_transactions_in_blocks },
-          { title: "Total Transactions in Database", value: total_transactions_in_database },
-          { title: "Missing Transactions", value: missing_transactions },
-          { title: "Transaction Compliance Percentage", value: `${compliance_percentage_transactions}%` },
-        ];
+    fetchWalletStats() {
+      axios.get("api/wallet-statistics")
+        .then((response) => {
+          const { total_quanta_in_wallets, emission, missing_quanta } = response.data;
+          const conversionFactor = 1e9;
+          const totalQuantaCoins = total_quanta_in_wallets / conversionFactor;
+          const percentageHeld = emission > 0
+            ? ((totalQuantaCoins / (emission / conversionFactor)) * 100).toFixed(2)
+            : "0.00";
+          this.walletStats = [
+            { title: "Total Quanta in Wallets", value: this.formatNumberWithStyle(totalQuantaCoins) + " Quanta" },
+            { title: "Coin Emission", value: this.formatNumberWithStyle(emission / conversionFactor) + " Quanta" },
+            { title: "Missing Quanta in Wallets", value: this.formatNumberWithStyle(missing_quanta / conversionFactor) + " Quanta" },
+            { title: "Wallet Compliance Percentage", value: percentageHeld + "%" },
+          ];
+        })
+        .catch((error) => {
+          console.error("Error fetching wallet statistics:", error);
+          this.hasError = true;
+        })
+        .finally(() => { this.isLoadingWallets = false; });
+    },
 
-        // Convert atomic units to coins (divide by 1e8)
-        const conversionFactor = 1e9;
-        const totalQuantaCoins = total_quanta_in_wallets / conversionFactor;
+    formatNumberWithStyle(number) {
+      const formatted = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 9,
+        maximumFractionDigits: 9
+      }).format(number);
 
-        // Correctly format emission and percentage held
-        const percentageHeld = emission > 0 ? ((totalQuantaCoins / (emission / conversionFactor)) * 100).toFixed(2) : "0.00";
-
-        // Apply correct number formatting (split integer & decimal)
-        this.walletStats = [
-          { title: "Total Quanta in Wallets", value: this.formatNumberWithStyle(totalQuantaCoins) + " Quanta" },
-          { title: "Coin Emission", value: this.formatNumberWithStyle(emission/conversionFactor) + " Quanta" },
-          { title: "Missing Quanta in Wallets", value: this.formatNumberWithStyle(missing_quanta/conversionFactor) + " Quanta"  },
-          { title: "Wallet Compliance Percentage", value: percentageHeld + "%" },
-        ];
-      })
-      .catch((error) => {
-        console.error("Error fetching statistics:", error);
-        this.hasError = true;
-      })
-      .finally(() => {
-        this.isLoading = false;
-      });
+      const [intPart, decPart] = formatted.split('.');
+      return `<span>${intPart}</span><span class="number-dec">${decPart}</span>`;
+    }
   },
-
-  formatNumberWithStyle(number) {
-    const formatted = new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 9,
-      maximumFractionDigits: 9
-    }).format(number);
-
-    const [intPart, decPart] = formatted.split('.'); // Split integer and decimal part
-    return `<span>${intPart}</span><span class="number-dec">${decPart}</span>`;
-  }
-},
   created() {
-    this.fetchStatistics();
+    this.fetchBlockStats();
+    this.fetchTransactionStats();
+    this.fetchWalletStats();
   },
 };
 </script>
