@@ -91,12 +91,16 @@ export default {
 
           formatter: function () {
             const date = this.x
+            const total = Math.round(this.y)
+            const newWallets = this.point.dailyNewWalletsFound
 
             const tooltipText =
               Highcharts.dateFormat('%e %B %Y', date) + '<br/>' +
               '<b>Wallets</b>' + '<br/>' +
-              'Total: ' + this.y + '<br/>' +
-              '+ ' + this.point.dailyNewWalletsFound + ' Wallets' + '<br/>'
+              'Total: ' + total + '<br/>' +
+              (newWallets != null
+                ? '+ ' + newWallets + ' Wallets'
+                : '(grouped period)') + '<br/>'
 
             return tooltipText
           },
@@ -109,6 +113,12 @@ export default {
             name: 'Number of Wallets',
             data: [],
             turboThreshold: 5000,
+            // Wallet-totaal is cumulatief en stijgt alleen: bij dataGrouping
+            // willen we het eindpunt van de bucket, niet het gemiddelde
+            // (anders krijg je rare decimalen zoals 22956.571 = 4/7).
+            dataGrouping: {
+              approximation: 'high',
+            },
           },
         ],
         responsive: {
